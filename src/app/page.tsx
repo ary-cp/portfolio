@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ArrowRight, Code2, MessageSquare, CheckCircle2, Zap, Clock, ShieldCheck, Mail, Phone, MonitorSmartphone, PenTool, ExternalLink, Calculator, Plus, MoveRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Home() {
   // Scroll Progress
@@ -16,6 +16,20 @@ export default function Home() {
   // Mouse Glow Effect
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+
+  // Spotlight Text Effect
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+  const [h1MousePos, setH1MousePos] = useState({ x: 0, y: 0 });
+  const [isH1Hovered, setIsH1Hovered] = useState(false);
+
+  const handleH1MouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    if (!h1Ref.current) return;
+    const rect = h1Ref.current.getBoundingClientRect();
+    setH1MousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
@@ -82,12 +96,32 @@ export default function Home() {
           </motion.div>
 
           <motion.h1 
+            ref={h1Ref}
+            onMouseMove={handleH1MouseMove}
+            onMouseEnter={() => setIsH1Hovered(true)}
+            onMouseLeave={() => setIsH1Hovered(false)}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[1.1] max-w-5xl mb-8"
+            className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] max-w-5xl mb-8 cursor-default"
           >
-            I build <span className="text-zinc-400">fast websites</span> <br className="hidden md:block"/>& <span className="text-zinc-400">custom AI bots</span>.
+            {/* Base Layer */}
+            <div className="text-white">
+              I build <span className="text-zinc-700 transition-colors duration-300">fast websites</span> <br className="hidden md:block"/>& <span className="text-zinc-700 transition-colors duration-300">custom AI bots</span>.
+            </div>
+
+            {/* Spotlight Layer */}
+            <motion.div 
+              className="absolute inset-0 text-white pointer-events-none drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+              animate={{ opacity: isH1Hovered ? 1 : 0 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                WebkitMaskImage: `radial-gradient(250px circle at ${h1MousePos.x}px ${h1MousePos.y}px, black 10%, transparent 100%)`,
+                maskImage: `radial-gradient(250px circle at ${h1MousePos.x}px ${h1MousePos.y}px, black 10%, transparent 100%)`
+              }}
+            >
+              I build fast websites <br className="hidden md:block"/>& custom AI bots.
+            </motion.div>
           </motion.h1>
           
           <motion.p 
