@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import { ArrowRight, Code2, MessageSquare, CheckCircle2, Zap, Clock, ShieldCheck, Mail, Phone, MonitorSmartphone, PenTool, ExternalLink, Calculator, Plus, MoveRight } from "lucide-react";
+import { ArrowRight, Code2, MessageSquare, CheckCircle2, Zap, Clock, ShieldCheck, Mail, Phone, MonitorSmartphone, PenTool, ExternalLink, Calculator, Plus, MoveRight, Bot } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { ChatBot } from "@/components/bot/ChatBot";
 
 export default function Home() {
   // Scroll Progress
@@ -12,6 +13,9 @@ export default function Home() {
     damping: 30,
     restDelta: 0.001
   });
+
+  // ChatBot State
+  const [isBotOpen, setIsBotOpen] = useState(false);
 
   // Mouse Glow Effect
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -54,7 +58,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-white/20 selection:text-white overflow-x-hidden relative">
+    <main className="min-h-screen bg-[#000000] text-zinc-300 font-sans selection:bg-white/20 selection:text-white overflow-x-hidden relative">
       
       {/* Scroll Progress Bar */}
       <motion.div
@@ -318,7 +322,7 @@ export default function Home() {
               </a>
             </div>
             <div className="md:w-1/2 relative bg-[#050505] min-h-[400px] flex items-center justify-center border-t md:border-t-0 md:border-l border-white/5 overflow-hidden">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-20 grayscale" />
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800')] bg-cover bg-center opacity-20" />
               <div className="relative z-10 p-6 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10">
                  <div className="flex items-center gap-4 mb-6 border-b border-white/10 pb-6">
                    <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center"><MonitorSmartphone className="text-white w-5 h-5"/></div>
@@ -326,6 +330,41 @@ export default function Home() {
                  </div>
                  <div className="w-48 h-1.5 bg-white/10 rounded-full mb-3 overflow-hidden"><div className="w-full h-full bg-white" /></div>
                  <div className="w-32 h-1.5 bg-white/10 rounded-full" />
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+            className="mt-6 rounded-3xl overflow-hidden bg-white/[0.02] border border-white/5 flex flex-col md:flex-row-reverse"
+          >
+            <div className="md:w-1/2 p-12 flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-zinc-400 text-xs font-medium mb-8 w-max">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> AI Agent
+              </div>
+              <h3 className="text-3xl font-bold text-white mb-4">Agency Sales Bot</h3>
+              <p className="text-zinc-400 mb-10 leading-relaxed font-light">
+                A custom AI assistant trained exclusively on this agency's data. It can answer questions about pricing, services, and the development process in real-time.
+              </p>
+              <div className="flex flex-wrap gap-2 mb-10">
+                {['Next.js', 'Vercel AI SDK', 'Groq Llama 3', 'Tailwind CSS'].map(tech => (
+                  <span key={tech} className="px-3 py-1.5 rounded-lg bg-white/5 text-zinc-400 text-xs">{tech}</span>
+                ))}
+              </div>
+              <button onClick={() => setIsBotOpen(true)} className="flex items-center justify-center gap-3 w-max px-8 py-4 rounded-xl bg-white text-black font-semibold hover:bg-zinc-200 transition-colors">
+                Chat with Bot <Bot className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="md:w-1/2 relative bg-[#050505] min-h-[400px] flex items-center justify-center border-t md:border-t-0 md:border-r border-white/5 overflow-hidden">
+              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50" />
+              <div className="relative z-10 w-3/4 flex flex-col gap-4">
+                <div className="self-end bg-white text-black p-4 rounded-2xl rounded-tr-sm max-w-[80%] text-sm font-medium shadow-lg">
+                  How much do you charge for a website?
+                </div>
+                <div className="self-start bg-zinc-900 text-white p-4 rounded-2xl rounded-tl-sm max-w-[90%] border border-white/10 text-sm shadow-xl">
+                  Deo's packages start at ₹10k for a custom landing page. Would you like me to calculate an exact estimate for you?
+                </div>
               </div>
             </div>
           </motion.div>
@@ -512,11 +551,12 @@ export default function Home() {
               </a>
             </motion.div>
 
-            <p className="text-xs text-zinc-700 tracking-widest uppercase">© 2026 DEO ARYAN. BUILT FOR SCALE.</p>
+            <p className="text-zinc-500 text-sm mt-8">© {new Date().getFullYear()} Aryweb. All rights reserved.</p>
           </div>
         </footer>
-
       </div>
-    </div>
+
+      <ChatBot isOpen={isBotOpen} onClose={() => setIsBotOpen(false)} />
+    </main>
   );
 }
