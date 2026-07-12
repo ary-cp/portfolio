@@ -23,19 +23,17 @@ export default function Home() {
     };
     window.addEventListener("mousemove", updateMousePosition);
     return () => window.removeEventListener("mousemove", updateMousePosition);
-  }, []);
-
   // Calculator State
   const [selectedBase, setSelectedBase] = useState(1);
   const [addons, setAddons] = useState({ seo: false, design: false, rush: false });
-  const basePrices = [15000, 25000, 45000, 20000];
+  const basePrices = [8000, 15000, 25000, 12000];
   const baseLabels = ["Landing Page", "Business Website", "Custom Web App", "AI Bot"];
   
   const calculateTotal = () => {
     let total = basePrices[selectedBase];
-    if (addons.seo) total += 5000;
-    if (addons.design) total += 10000;
-    if (addons.rush) total += 10000;
+    if (addons.seo) total += 3000;
+    if (addons.design) total += 5000;
+    if (addons.rush) total += 4000;
     return total;
   };
 
@@ -392,9 +390,9 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3"><Plus className="text-emerald-400" /> 2. Select Add-ons</h3>
                 <div className="space-y-4">
                   {[
-                    { id: 'seo', name: 'Advanced SEO & Analytics', price: 5000, desc: 'Rank higher on Google and track user behavior.' },
-                    { id: 'design', name: 'Premium UI/UX Branding', price: 10000, desc: 'Custom logo, color palette, and bespoke design system.' },
-                    { id: 'rush', name: 'Priority 7-Day Rush Delivery', price: 10000, desc: 'Skip the waitlist. Delivered within 7 days guaranteed.' }
+                    { id: 'seo', name: 'Advanced SEO & Analytics', price: 3000, desc: 'Rank higher on Google and track user behavior.' },
+                    { id: 'design', name: 'Premium UI/UX Branding', price: 5000, desc: 'Custom logo, color palette, and bespoke design system.' },
+                    { id: 'rush', name: 'Priority 7-Day Rush Delivery', price: 4000, desc: 'Skip the waitlist. Delivered within 7 days guaranteed.' }
                   ].map((addon) => (
                     <div 
                       key={addon.id}
@@ -426,15 +424,15 @@ export default function Home() {
                     <span>{baseLabels[selectedBase]}</span>
                     <span>₹{(basePrices[selectedBase]).toLocaleString()}</span>
                   </div>
-                  {addons.seo && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Advanced SEO</span><span>₹5,000</span></div>}
-                  {addons.design && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Premium UI/UX</span><span>₹10,000</span></div>}
-                  {addons.rush && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Rush Delivery</span><span>₹10,000</span></div>}
+                  {addons.seo && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Advanced SEO</span><span>₹3,000</span></div>}
+                  {addons.design && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Premium UI/UX</span><span>₹5,000</span></div>}
+                  {addons.rush && <div className="flex justify-between text-emerald-400 text-sm"><span>+ Rush Delivery</span><span>₹4,000</span></div>}
                 </div>
                 
                 <div className="border-t border-white/10 pt-6 mb-8">
                   <div className="text-sm text-slate-400 mb-2">Estimated Investment</div>
                   <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-emerald-400">
-                    ₹{calculateTotal().toLocaleString()} <span className="text-xl text-slate-500 font-normal">to</span> ₹{(calculateTotal() + 10000).toLocaleString()}
+                    ₹{calculateTotal().toLocaleString()} <span className="text-xl text-slate-500 font-normal">to</span> ₹{(calculateTotal() + 5000).toLocaleString()}
                   </div>
                 </div>
 
