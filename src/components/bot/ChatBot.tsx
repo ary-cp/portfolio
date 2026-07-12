@@ -1,26 +1,21 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { useChat } from "@ai-sdk/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Bot, Sparkles, Loader2 } from "lucide-react";
 
-export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [input, setInput] = useState("");
-  const { messages, sendMessage, status } = useChat({
-    messages: [
-      { id: '1', role: "assistant", parts: [{ type: 'text', text: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }] }
-    ]
-  });
-  
-  const isLoading = status === 'submitted' || status === 'streaming';
+type Message = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] } as any);
-    setInput("");
-  };
+export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [messages, setMessages] = useState<Message[]>([
+    { id: '1', role: "assistant", content: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }
+  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -31,6 +26,52 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages })
+      });
+      
+      if (!res.ok) throw new Error("API Error");
+      
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No reader");
+      
+      const assistantId = (Date.now() + 1).toString();
+      setMessages(prev => [...prev, { id: assistantId, role: 'assistant', content: "" }]);
+      
+      const decoder = new TextDecoder();
+      let done = false;
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) {
+          const chunk = decoder.decode(value, { stream: true });
+          // In Vercel's toTextStreamResponse, text comes like 0:"chunk" 0:"chunk"
+          // In raw textStream it is raw string chunk!
+          // We are using raw textStream on backend now.
+          setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: m.content + chunk } : m));
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'assistant', content: "Oops, my brain is offline right now. Please try again later!" }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -68,12 +109,10 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
             {/* Chat Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((m: any) => (
+              {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-3.5 rounded-2xl ${m.role === 'user' ? 'bg-white text-black rounded-tr-sm' : 'bg-white/10 text-white rounded-tl-sm'}`}>
-                    <p className="text-sm leading-relaxed">
-                      {m.parts?.filter((p: any) => p.type === 'text').map((p: any) => p.text).join("")}
-                    </p>
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{m.content}</p>
                   </div>
                 </div>
               ))}

@@ -7,8 +7,8 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const coreMessages = messages.map((m: any) => ({
-    role: m.role,
-    content: m.parts ? m.parts.map((p: any) => p.text || '').join('') : (m.content || '')
+    role: m.role || 'user',
+    content: m.content || (m.parts ? m.parts.map((p: any) => p.text || '').join('') : '')
   }));
 
   const result = await streamText({
@@ -32,5 +32,7 @@ Keep your answers short, crisp, and directly address the user's question. Do not
     messages: coreMessages,
   });
 
-  return result.toTextStreamResponse();
+  return new Response(result.textStream, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+  });
 }
