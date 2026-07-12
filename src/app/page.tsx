@@ -76,8 +76,18 @@ export default function Home() {
       />
 
       {/* Dynamic Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-screen" />
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.03, 0.08, 0.03], x: [0, 40, 0], y: [0, 30, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] rounded-full bg-white blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.3, 1], opacity: [0.02, 0.06, 0.02], x: [0, -40, 0], y: [0, -30, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[40%] right-[-10%] w-[60%] h-[60%] rounded-full bg-zinc-400 blur-[120px]" 
+        />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay" />
       </div>
 
       <div className="relative z-10">
@@ -119,11 +129,11 @@ export default function Home() {
             className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] max-w-5xl mb-8 cursor-default"
           >
             {/* Base Layer */}
-            <div className="text-white md:text-zinc-700 transition-colors duration-300">
+            <div className="text-zinc-700 transition-colors duration-300">
               I build fast websites <br className="hidden md:block"/>& custom AI bots.
             </div>
 
-            {/* Spotlight Layer */}
+            {/* Desktop Spotlight Layer */}
             <motion.div 
               className="hidden md:block absolute inset-0 text-white pointer-events-none drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
               animate={{ opacity: isH1Hovered ? 1 : 0 }}
@@ -132,6 +142,15 @@ export default function Home() {
                 WebkitMaskImage: `radial-gradient(250px circle at ${h1MousePos.x}px ${h1MousePos.y}px, black 10%, transparent 100%)`,
                 maskImage: `radial-gradient(250px circle at ${h1MousePos.x}px ${h1MousePos.y}px, black 10%, transparent 100%)`
               }}
+            >
+              I build fast websites <br className="hidden md:block"/>& custom AI bots.
+            </motion.div>
+
+            {/* Mobile Auto-Pulse Layer */}
+            <motion.div 
+              className="block md:hidden absolute inset-0 text-white pointer-events-none drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
               I build fast websites <br className="hidden md:block"/>& custom AI bots.
             </motion.div>
