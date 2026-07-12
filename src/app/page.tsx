@@ -62,6 +62,19 @@ export default function Home() {
         style={{ scaleX }}
       />
 
+      {/* Ambient Cursor Glow */}
+      <motion.div 
+        className="fixed top-0 left-0 w-[800px] h-[800px] rounded-full pointer-events-none z-0 hidden md:block mix-blend-screen"
+        animate={{
+          x: mousePosition.x - 400,
+          y: mousePosition.y - 400,
+        }}
+        transition={{ type: "tween", ease: "circOut", duration: 0.15 }}
+        style={{
+          background: "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%)"
+        }}
+      />
+
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-screen" />
