@@ -106,8 +106,8 @@ export default function Home() {
             className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] max-w-5xl mb-8 cursor-default"
           >
             {/* Base Layer */}
-            <div className="text-white">
-              I build <span className="text-zinc-700 transition-colors duration-300">fast websites</span> <br className="hidden md:block"/>& <span className="text-zinc-700 transition-colors duration-300">custom AI bots</span>.
+            <div className="text-zinc-700 transition-colors duration-300">
+              I build fast websites <br className="hidden md:block"/>& custom AI bots.
             </div>
 
             {/* Spotlight Layer */}
