@@ -148,7 +148,7 @@ export default function Home() {
               <span className="relative z-10 flex items-center gap-2">View Services <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
             </a>
             <a 
-              href="mailto:hello@aryweb.in" 
+              href="mailto:contact@aryweb.in" 
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
               className="group px-8 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all active:scale-95 flex items-center justify-center gap-2 text-white font-medium backdrop-blur-sm"
@@ -508,9 +508,9 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24"
             >
-              <a href="mailto:hello@aryweb.in" className="group flex flex-col items-center justify-center gap-2 px-8 py-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-purple-500/10 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.4)] transition-all duration-300 active:scale-95 backdrop-blur-md">
+              <a href="mailto:contact@aryweb.in" className="group flex flex-col items-center justify-center gap-2 px-8 py-6 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-purple-500/10 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.4)] transition-all duration-300 active:scale-95 backdrop-blur-md">
                 <Mail className="w-6 h-6 text-purple-400 mb-2 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] transition-all" />
-                <span className="text-xl text-white font-semibold group-hover:text-purple-300 transition-colors">hello@aryweb.in</span>
+                <span className="text-xl text-white font-semibold group-hover:text-purple-300 transition-colors">contact@aryweb.in</span>
                 <span className="text-sm text-slate-400">For new projects & inquiries</span>
               </a>
               <a href="mailto:support@aryweb.in" className="group flex flex-col items-center justify-center gap-2 px-8 py-6 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(52,211,153,0.4)] transition-all duration-300 active:scale-95 backdrop-blur-md">
