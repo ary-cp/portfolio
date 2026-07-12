@@ -6,6 +6,11 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
+  const coreMessages = messages.map((m: any) => ({
+    role: m.role,
+    content: m.parts ? m.parts.map((p: any) => p.text || '').join('') : (m.content || '')
+  }));
+
   const result = await streamText({
     model: groq('llama-3.1-8b-instant'),
     system: `You are Deo's AI Sales Assistant, representing his premium web development agency 'Aryweb'. 
@@ -24,7 +29,7 @@ Key details about Deo:
 - **Contact:** Always encourage users to email contact@aryweb.in when they are ready.
 
 Keep your answers short, crisp, and directly address the user's question. Do not hallucinate any information.`,
-    messages,
+    messages: coreMessages,
   });
 
   return result.toTextStreamResponse();
