@@ -71,7 +71,7 @@ export default function Home() {
         }}
         transition={{ type: "tween", ease: "circOut", duration: 0.15 }}
         style={{
-          background: "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%)"
+          background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%)"
         }}
       />
 
