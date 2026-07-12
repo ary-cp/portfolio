@@ -242,7 +242,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 blur-[120px] pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700" />
             
             <div className="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-8 border-white/10 bg-white/5 flex-shrink-0 flex items-center justify-center relative z-10 group-hover:border-purple-500/40 group-hover:shadow-[0_0_50px_rgba(168,85,247,0.3)] transition-all duration-700">
-              <p className="text-sm text-slate-500 text-center px-4 group-hover:text-purple-300 transition-colors">Replace with<br/>photo.jpg</p>
+              <img src="/profile.png" alt="Deo Aryan" className="w-full h-full object-cover" />
             </div>
             
             <div className="relative z-10">
