@@ -337,7 +337,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="rounded-[3rem] bg-white/[0.02] border border-white/5 p-10 md:p-16 flex flex-col md:flex-row items-center gap-16"
           >
-            <div className="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white/5 bg-white/5 flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-700">
+            <div className="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white/5 bg-white/5 flex-shrink-0 hover:scale-105 transition-all duration-700">
               <img src="/profile.png" alt="Deo Aryan" className="w-full h-full object-cover" />
             </div>
             
