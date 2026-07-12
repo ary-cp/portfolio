@@ -345,8 +345,8 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tighter">Meet the Founder</h2>
               <h3 className="text-xl text-zinc-400 font-medium mb-8">Deo Aryan <span className="text-zinc-600 font-normal ml-2">• IIT Jodhpur</span></h3>
               <p className="text-zinc-400 leading-relaxed mb-10 text-lg font-light">
-                "I started this agency because I saw too many local businesses struggling with outdated websites and losing customers to slow response times. 
-                My goal is simple: I build digital systems that make you more money while requiring zero effort from your end."
+                "I specialize in engineering high-performance web applications and intelligent AI automations.<br/><br/>
+                No bloated templates or unnecessary meetings. I build bespoke digital systems that look premium, load instantly, and are designed specifically to drive your business forward."
               </p>
               <a href="#contact" className="px-8 py-4 rounded-xl bg-white text-black font-semibold hover:bg-zinc-200 transition-colors inline-block">
                 Let's Talk
