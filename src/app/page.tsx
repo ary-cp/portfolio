@@ -93,7 +93,7 @@ export default function Home() {
             onMouseLeave={() => setIsHovering(false)}
             className="inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all active:scale-95 text-sm font-medium text-white"
           >
-            Book a Call
+            Contact Us
           </a>
         </nav>
 
@@ -119,13 +119,13 @@ export default function Home() {
             className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.1] max-w-5xl mb-8 cursor-default"
           >
             {/* Base Layer */}
-            <div className="text-zinc-700 transition-colors duration-300">
+            <div className="text-white md:text-zinc-700 transition-colors duration-300">
               I build fast websites <br className="hidden md:block"/>& custom AI bots.
             </div>
 
             {/* Spotlight Layer */}
             <motion.div 
-              className="absolute inset-0 text-white pointer-events-none drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+              className="hidden md:block absolute inset-0 text-white pointer-events-none drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
               animate={{ opacity: isH1Hovered ? 1 : 0 }}
               transition={{ duration: 0.2 }}
               style={{
@@ -434,8 +434,8 @@ export default function Home() {
                 1
               </div>
               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-4rem)] p-8 rounded-3xl bg-white/[0.02] border border-white/5">
-                <h4 className="text-xl font-bold text-white mb-3">Discovery Call</h4>
-                <p className="text-zinc-400 text-sm leading-relaxed font-light">We hop on a quick 15-minute call. You tell me your business bottlenecks, and I propose a technical solution.</p>
+                <h4 className="text-xl font-bold text-white mb-3">Project Discussion</h4>
+                <p className="text-zinc-400 text-sm leading-relaxed font-light">Shoot me an email with your requirements. We'll discuss your bottlenecks over chat or email, and I'll propose a technical solution.</p>
               </div>
             </motion.div>
             {/* Step 2 */}
