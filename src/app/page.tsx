@@ -512,7 +512,7 @@ export default function Home() {
                 <Phone className="w-6 h-6 text-purple-400 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(168,85,247,0.8)] transition-all" />
                 <span className="text-xl text-white font-semibold group-hover:text-purple-300 transition-colors">+91 9006340428</span>
               </div>
-              <a href="mailto:b24bs1122@iitj.ac.in" className="group flex items-center gap-4 px-8 py-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(52,211,153,0.4)] transition-all duration-300 active:scale-95 backdrop-blur-md">
+              <a href="mailto:admin@aryweb.in" className="group flex items-center gap-4 px-8 py-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(52,211,153,0.4)] transition-all duration-300 active:scale-95 backdrop-blur-md">
                 <Mail className="w-6 h-6 text-emerald-400 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(52,211,153,0.8)] transition-all" />
                 <span className="text-xl text-white font-semibold group-hover:text-emerald-300 transition-colors">Email Me</span>
               </a>
