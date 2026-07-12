@@ -1,14 +1,17 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
+import { useChat } from "ai/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Bot, Sparkles } from "lucide-react";
+import { X, Send, Bot, Sparkles, Loader2 } from "lucide-react";
 
 export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [messages, setMessages] = useState([
-    { role: "assistant", content: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }
-  ]);
-  const [input, setInput] = useState("");
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    initialMessages: [
+      { id: '1', role: "assistant", content: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }
+    ]
+  });
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -18,19 +21,6 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    
-    setMessages(prev => [...prev, { role: "user", content: input }]);
-    setInput("");
-    
-    // Simulate AI thinking for now
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: "assistant", content: "I'm still a prototype! Deo is connecting my brain to the AI API right now." }]);
-    }, 1000);
-  };
 
   return (
     <AnimatePresence>
@@ -68,13 +58,21 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
             {/* Chat Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {messages.map((m) => (
+                <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-3.5 rounded-2xl ${m.role === 'user' ? 'bg-white text-black rounded-tr-sm' : 'bg-white/10 text-white rounded-tl-sm'}`}>
                     <p className="text-sm leading-relaxed">{m.content}</p>
                   </div>
                 </div>
               ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="max-w-[85%] p-3.5 rounded-2xl bg-white/10 text-white rounded-tl-sm flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-zinc-400" />
+                    <span className="text-sm text-zinc-400">Thinking...</span>
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
 
@@ -84,11 +82,12 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                 <input 
                   type="text" 
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
+                  onChange={handleInputChange}
                   placeholder="Ask me anything..." 
-                  className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm text-white placeholder:text-zinc-400 focus:outline-none focus:border-white/30 transition-colors"
+                  disabled={isLoading}
+                  className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm text-white placeholder:text-zinc-400 focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50"
                 />
-                <button type="submit" disabled={!input.trim()} className="absolute right-2 p-2 rounded-full bg-white text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors">
+                <button type="submit" disabled={!input.trim() || isLoading} className="absolute right-2 p-2 rounded-full bg-white text-black hover:bg-zinc-200 disabled:opacity-50 transition-colors">
                   <Send className="w-4 h-4 ml-0.5" />
                 </button>
               </form>
