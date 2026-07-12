@@ -27,5 +27,5 @@ Keep your answers short, crisp, and directly address the user's question. Do not
     messages,
   });
 
-  return result.toDataStreamResponse();
+  return result.toTextStreamResponse();
 }

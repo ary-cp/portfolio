@@ -1,16 +1,26 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Bot, Sparkles, Loader2 } from "lucide-react";
 
 export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    initialMessages: [
-      { id: '1', role: "assistant", content: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }
+  const [input, setInput] = useState("");
+  const { messages, sendMessage, status } = useChat({
+    messages: [
+      { id: '1', role: "assistant", parts: [{ type: 'text', text: "Hi! I'm Deo's AI assistant. I can tell you about his services, pricing, and process. What would you like to know?" }] }
     ]
   });
+  
+  const isLoading = status === 'submitted' || status === 'streaming';
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    sendMessage({ role: 'user', parts: [{ type: 'text', text: input }] } as any);
+    setInput("");
+  };
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -58,10 +68,12 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
             {/* Chat Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((m) => (
+              {messages.map((m: any) => (
                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] p-3.5 rounded-2xl ${m.role === 'user' ? 'bg-white text-black rounded-tr-sm' : 'bg-white/10 text-white rounded-tl-sm'}`}>
-                    <p className="text-sm leading-relaxed">{m.content}</p>
+                    <p className="text-sm leading-relaxed">
+                      {m.parts?.filter((p: any) => p.type === 'text').map((p: any) => p.text).join("")}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -82,7 +94,7 @@ export function ChatBot({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                 <input 
                   type="text" 
                   value={input}
-                  onChange={handleInputChange}
+                  onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask me anything..." 
                   disabled={isLoading}
                   className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm text-white placeholder:text-zinc-400 focus:outline-none focus:border-white/30 transition-colors disabled:opacity-50"
