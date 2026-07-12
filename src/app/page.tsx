@@ -78,14 +78,14 @@ export default function Home() {
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.03, 0.08, 0.03], x: [0, 40, 0], y: [0, 30, 0] }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15], x: [0, 40, 0], y: [0, 30, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] rounded-full bg-white blur-[120px]" 
+          className="absolute top-[-10%] left-[-10%] w-[70%] h-[70%] rounded-full bg-white blur-[80px]" 
         />
         <motion.div 
-          animate={{ scale: [1, 1.3, 1], opacity: [0.02, 0.06, 0.02], x: [0, -40, 0], y: [0, -30, 0] }}
+          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1], x: [0, -40, 0], y: [0, -30, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[40%] right-[-10%] w-[60%] h-[60%] rounded-full bg-zinc-400 blur-[120px]" 
+          className="absolute top-[40%] right-[-10%] w-[60%] h-[60%] rounded-full bg-zinc-400 blur-[80px]" 
         />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-30 mix-blend-overlay" />
       </div>
