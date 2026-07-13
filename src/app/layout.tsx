@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aryweb.in"),
   title: "Deo Aryan | Premium Web Developer & AI Automation Expert",
   description: "I build fast, high-converting websites and custom AI bots that automate your business. Let's scale your digital presence with clean code and no fluff.",
   keywords: ["Deo Aryan", "Web Developer", "AI Automation", "Next.js", "Freelance Developer", "Custom Websites", "Chatbots"],
